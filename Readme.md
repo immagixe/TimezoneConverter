@@ -10,18 +10,18 @@
 
 > **Response example:**
 {
-&emsp;   "from":{
-&emsp;&emsp;      "timestamp":"2022-07-04T15:18:22+03:00",
-&emsp;&emsp;      "format":"yyyy-MM-dd'T'HH:mm:ssXXX",
-&emsp;&emsp;      "city":"Moscow",
- &emsp;&emsp;     "timezone":"MSK"
-&emsp;   },
-&emsp;   "to":{
-&emsp;&emsp;      "timestamp":"2022-07-04T22:18:22+10:00",
-&emsp;&emsp;      "format":"yyyy-MM-dd'T'HH:mm:ssXXX",
-&emsp;&emsp;      "city":"Sydney",
-&emsp;&emsp;      "timezone":"AEST"
-&emsp;    }
+"from": {
+"timestamp": "2022-07-04T15:18:22+03:00",
+"format": "YYYY-MM-DDThh:mm:ssXXX",
+"city": "Moscow",
+"timezone": "MSK"
+},
+"to": {
+"timestamp": "2022-07-04T22:18:22+10:00",
+"format": "YYYY-MM-DDThh:mm:ssXXX",
+"city": "Sydney",
+"timezone": "AEST"
+}
 }
 
 ## List of cities in database

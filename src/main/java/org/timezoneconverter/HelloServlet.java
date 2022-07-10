@@ -1,4 +1,4 @@
-package timezoneconverter.timezoneconverter;
+package org.timezoneconverter;
 
 import java.io.*;
 import javax.servlet.http.*;

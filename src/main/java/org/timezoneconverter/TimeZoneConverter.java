@@ -5,40 +5,37 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.sql.*;
 
-public class Main {
+public class TimeZoneConverter {
 
+    // Data from the GET request
+    private final String fromTimestamp;
+    private final String format;
+    private final String fromCity;
+    private final String toCity;
 
-    public static void main(String[] args) throws JsonProcessingException {
+    public TimeZoneConverter(String fromTimestamp, String format, String fromCity, String toCity) {
+        this.fromTimestamp = fromTimestamp;
+        this.format = format;
+        this.fromCity = fromCity;
+        this.toCity = toCity;
+    }
 
-        //GET /timeConvert?from=Moscow&to=Sydney&timestamp=2022-07-04T15:18:22+03&format=YYYY-MM-DDThh:mm:ssXXX
-
-        // Data from the GET request
-
-        String fromTimestamp = "2022-07-09T13:29:22+03:00";
-        String format = "yyyy-MM-dd'T'HH:mm:ssXXX";
-        String fromCity = "Moscow";
-        String toCity = "Hong Kong";
+    public String convert() throws JsonProcessingException {
 
         // Data from the database
-
         String fromTimezone;
         String fromUTCShift;
         String toTimezone;
         String toUTCShift;
 
         // Connecting and retrieving data from the database
-
-        String url = "jdbc:postgresql://localhost:5432/Timezone";
-        String username = "postgres";
-        String password = "postgres";
-
+        String url = "jdbc:sqlite:C:/Users/User/Desktop/JavaProjects/TimezoneConverter/src/main/resources/timezonesdb.db";
         try {
-            Class.forName("org.postgresql.Driver");
+            Class.forName("org.sqlite.JDBC");
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-
-        try (Connection connect = DriverManager.getConnection(url, username, password)) {
+        try (Connection connect = DriverManager.getConnection(url)) {
             DataFromDatabase dataFromDatabase = new DataFromDatabase(fromTimestamp, format);
             fromTimezone = dataFromDatabase.getTimeZoneIdFromDB(connect, fromCity);
             fromUTCShift = dataFromDatabase.getUTCShift(connect, fromTimezone);
@@ -48,8 +45,8 @@ public class Main {
             throw new RuntimeException(e);
         }
 
-        // Getting time for second city
-        TimeZoneConvert timeZoneConvert = new TimeZoneConvert(format, fromTimestamp, fromUTCShift, toUTCShift);
+        // Getting time for the second city
+        TimeConverter timeZoneConvert = new TimeConverter(format, fromTimestamp, fromUTCShift, toUTCShift);
         String toTimestamp = timeZoneConvert.getNewDateTime();
 
         // JSON creation
@@ -57,7 +54,6 @@ public class Main {
         CityTime from = new CityTime(fromTimestamp, format, fromCity, fromTimezone);
         CityTime to = new CityTime(toTimestamp, format, toCity, toTimezone);
         JsonBox jsonBox = new JsonBox(from, to);
-        String resultFrom = objectMapper.writeValueAsString(jsonBox);
-        System.out.println(resultFrom);
+        return objectMapper.writeValueAsString(jsonBox);
     }
 }

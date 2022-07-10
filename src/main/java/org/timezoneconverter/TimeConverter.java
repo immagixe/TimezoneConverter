@@ -4,14 +4,14 @@ import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 
-public class TimeZoneConvert {
+public class TimeConverter {
 
     private final String format;
     private final String fromTimestamp;
     private final String fromUTCShift;
     private final String toUTCShift;
 
-    public TimeZoneConvert(String format, String fromTimestamp, String fromUTCShift, String toUTCShift) {
+    public TimeConverter(String format, String fromTimestamp, String fromUTCShift, String toUTCShift) {
         this.format = format;
         this.fromTimestamp = fromTimestamp;
         this.fromUTCShift = fromUTCShift;
@@ -21,7 +21,7 @@ public class TimeZoneConvert {
     public String getNewDateTime() {
 
         // Converting string from request to date according to format
-        OffsetDateTime datetimeFrom = TimeZoneConvert.convertDateAccordingToPattern (format, fromTimestamp);
+        OffsetDateTime datetimeFrom = TimeConverter.convertDateAccordingToPattern (format, fromTimestamp);
 
         // Converting UTC shift difference to seconds
         int seconds = offsetToSeconds(toUTCShift) - offsetToSeconds(fromUTCShift);
@@ -29,7 +29,6 @@ public class TimeZoneConvert {
 
         // Setting a new offset for the second city
         OffsetDateTime datetimeToChangeOffset = datetimeTo.withOffsetSameLocal(ZoneOffset.of(toUTCShift));
-
         return String.valueOf(datetimeToChangeOffset);
     }
 

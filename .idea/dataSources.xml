@@ -8,5 +8,12 @@
       <jdbc-url>jdbc:postgresql://localhost:5432/Timezone</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="timezonesdb.db" uuid="f6a9b6f1-9d92-41d8-bae8-123599659ea8">
+      <driver-ref>sqlite.xerial</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+      <jdbc-url>jdbc:sqlite:src/main/resources/timezonesdb.db</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>
